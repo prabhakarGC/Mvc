@@ -63,10 +63,7 @@ namespace Microsoft.AspNet.Mvc.Core
 
             if (finalMatches == null || finalMatches.Count == 0)
             {
-                if (_logger.IsEnabled(LogLevel.Verbose))
-                {
-                    _logger.LogWarning("No actions matched the current request.");
-                }
+                _logger.LogWarning("No actions matched the current request.");
 
                 return Task.FromResult<ActionDescriptor>(null);
             }
@@ -74,20 +71,14 @@ namespace Microsoft.AspNet.Mvc.Core
             {
                 var selectedAction = finalMatches[0];
 
-                if (_logger.IsEnabled(LogLevel.Verbose))
-                {
-                    _logger.LogInformation("Action {ActionName} matched the request.", selectedAction.DisplayName);
-                }
+                _logger.LogVerbose("Action {ActionName} matched the request.", selectedAction.DisplayName);
 
                 return Task.FromResult(selectedAction);
             }
             else
             {
-                if (_logger.IsEnabled(LogLevel.Verbose))
-                {
-                    _logger.LogWarning("Ambiguity due to multiple actions matching the request. Matching actions: " 
-                        + string.Join(", ", finalMatches.Select((ad) => ad.DisplayName)));
-                }
+                _logger.LogWarning("Ambiguity due to multiple actions matching the request. Matching actions: " 
+                    + string.Join(", ", finalMatches.Select((ad) => ad.DisplayName)));
 
                 var actionNames = string.Join(
                     Environment.NewLine,
